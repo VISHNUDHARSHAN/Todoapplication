@@ -1,7 +1,9 @@
 package com.Springbootproj.ToDo.controller;
 
 
+import com.Springbootproj.ToDo.Repository.TaskRepository;
 import com.Springbootproj.ToDo.model.Task;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,6 +15,8 @@ import java.util.List;
 @RestController
 public class TaskController {
 
+    @Autowired
+    private TaskRepository taskRepository;
     @GetMapping("/hello-world")
     public String helloworld()
     {
@@ -31,8 +35,12 @@ public class TaskController {
 //    }
 
     @PostMapping("/api/tasks")
-    public void createTask(@RequestBody Task task)
+    public Task createTask(@RequestBody Task task)
     {
         System.out.println(task.getDescription() + " - " + task.isCompleted());
+        taskRepository.save(task);
+        System.out.println(task.getDescription() + " - " + task.isCompleted());
+        return task;
+
     }
 }
