@@ -4,15 +4,14 @@ package com.Springbootproj.ToDo.controller;
 import com.Springbootproj.ToDo.Repository.TaskRepository;
 import com.Springbootproj.ToDo.model.Task;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@CrossOrigin
+@RequestMapping("/api/tasks")
 public class TaskController {
 
     @Autowired
@@ -34,7 +33,7 @@ public class TaskController {
 //        return users;
 //    }
 
-    @PostMapping("/api/tasks")
+    @PostMapping
     public Task createTask(@RequestBody Task task)
     {
         System.out.println(task.getDescription() + " - " + task.isCompleted());
@@ -42,5 +41,10 @@ public class TaskController {
         System.out.println(task.getDescription() + " - " + task.isCompleted());
         return task;
 
+    }
+    @GetMapping
+    public List<Task> getAllTasks()
+    {
+        return taskRepository.findAll();
     }
 }
